@@ -1,8 +1,14 @@
 import SwiftUI
 
+#if os(macOS)
+public typealias PlatformFont = NSFont
+#else
+public typealias PlatformFont = UIFont
+#endif
+
 public struct MarqueeText : View {
     public var text: String
-    public var font: UIFont
+    public var font: PlatformFont
     public var leftFade: CGFloat
     public var rightFade: CGFloat
     public var startDelay: Double
@@ -90,7 +96,7 @@ public struct MarqueeText : View {
 
     }
     
-    public init(text: String, font: UIFont, leftFade: CGFloat, rightFade: CGFloat, startDelay: Double, alignment: Alignment? = nil) {
+    public init(text: String, font: PlatformFont, leftFade: CGFloat, rightFade: CGFloat, startDelay: Double, alignment: Alignment? = nil) {
         self.text = text
         self.font = font
         self.leftFade = leftFade
@@ -110,13 +116,13 @@ extension MarqueeText {
 
 extension String {
     
-    func widthOfString(usingFont font: UIFont) -> CGFloat {
+    func widthOfString(usingFont font: PlatformFont) -> CGFloat {
         let fontAttributes = [NSAttributedString.Key.font: font]
         let size = self.size(withAttributes: fontAttributes)
         return size.width
     }
 
-    func heightOfString(usingFont font: UIFont) -> CGFloat {
+    func heightOfString(usingFont font: PlatformFont) -> CGFloat {
         let fontAttributes = [NSAttributedString.Key.font: font]
         let size = self.size(withAttributes: fontAttributes)
         return size.height
